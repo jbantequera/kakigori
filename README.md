@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿## Getting Started
 
 In the root directory of the project...
@@ -61,3 +62,7 @@ The front-end is served on http://localhost:3000/ and the back-end on http://loc
 
 
   This project was created using [Microsoft Web Template Studio](https://github.com/Microsoft/WebTemplateStudio).
+=======
+# Kakigōri
+A social network for foodies
+>>>>>>> f5ffd9700f5046aedcb75cf21f2b62ece5a6097c
