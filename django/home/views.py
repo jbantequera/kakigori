@@ -6,4 +6,4 @@ from django.http import HttpResponse
 
 # Create your views here.
 def custom_login(request):
-    return HttpResponse("Hola Mundo")
+    return render(request, "home/login.html", {})

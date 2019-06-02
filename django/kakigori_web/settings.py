@@ -52,7 +52,7 @@ ROOT_URLCONF = 'kakigori_web.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ["kakigori_web/templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
