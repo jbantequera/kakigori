@@ -14,14 +14,19 @@
     border: 1px solid #ccc;
     border-radius: 25px;
     font-size: 16px;
+    text-align: right;
     background-image: url('img/search.png');
     background-repeat: no-repeat;
-    background-position: 3px 2px;
-    text-align: center;
+    background-position: 4% 50%;
+    padding-right: 5%;
+    padding-left: 15%;
+    transition: 0.2s;
 }
 
 .search-input:focus {
     outline: none !important;
+    border: 1px solid #CC608D;
+    background-color: white;
 }
 
 a {
@@ -102,6 +107,33 @@ img {
 
 .nav-movil a:focus{
     color: #212121;
+}
+
+
+.btn-crear {
+    color: white !important;
+    border-radius: 50px !important;
+    background-color: #CC608D !important;
+    transition: 0.2s;
+}
+
+.btn-crear:focus {
+    box-shadow: none !important;
+    background-color: #803C58 !important;
+}
+
+.div-crear {
+    display: flex;
+    background-color: #212121;
+    color: white !important;
+    align-items: center;
+    justify-content: center;
+    width: 94vw;
+    height: 30px;
+    margin-left: 3vw;
+    margin-right: 3vw;
+    font-size: 18px;
+    border-radius: 5px;
 }
 
 @media (max-width: 767.98px) {

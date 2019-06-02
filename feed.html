@@ -67,8 +67,9 @@
             </nav>
             <!-- NAVBAR MOVIL -->
             <div class="col-12 md-show p-0 fixed-bottom" style="height: 40px;">
-                <nav class="navbar navbar-light bg-light px-5 nav-movil" style="height: 100%;">
+                <nav class="navbar navbar-light bg-light px-4 nav-movil" style="height: 100%;">
                     <a href=""><i class="fas fa-home"></i></a>
+                    <a href=""><i class="fas fa-search"></i></a>
                     <a href=""><i class="fas fa-bell"></i></a>
                     <a href=""><i class="fas fa-cog"></i></a>
                     <a href=""><i class="fas fa-sign-out-alt"></i></a>
@@ -76,7 +77,7 @@
             </div>
             
             <!-- CONTENIDO -->
-            <div class="col-md-9 col-lg-7 col-12 p-0">
+            <div class="col-md-9 col-lg-8 col-12 p-0">
                 <div class="container-fluid contenido" style="min-height: 100%">
                     <!-- RECETA -->
                     <div class="container-fluid receta-min shadow my-3 ">
@@ -117,16 +118,23 @@
             </div>
             
             <!-- CONTROLES -->
-            <div class="col-lg-3 p-0">
-                <div class="container-fluid p-0">
-                    <div class="row">
+            <div class="col-lg-2 p-0 shadow-lg md-hide" style="z-index: 999">
+                <div class="container-fluid">
+                    <div class="row mt-4 justify-content-center">
                         <div clas="col">
-                        <form>
-                            <input type="text" class="search-input" id="searchInput" placeholder="Búsqueda">
-                        </form>
+                            <form>
+                                <input type="text" class="search-input" id="searchInput" placeholder="Búsqueda" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Búsqueda'">
+                            </form>
+                        </div>
                     </div>
+                    <div class="row mt-4 justify-content-center">
+                        <input class="btn btn-crear" style="" type="button" value="Crear Receta">
                     </div>
                 </div>
+            </div>
+            <!-- CONTROL EN MÓVIL -->
+            <div class="md-show" style="position: fixed; bottom: 7vh; z-index: 999">
+                <a href="" class="shadow div-crear">Añadir receta</a>
             </div>
         </div>
     </div>
