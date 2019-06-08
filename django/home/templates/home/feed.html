@@ -24,7 +24,7 @@ Inicio
                     <div class="col-lg-8 col-md-12">
                         <div class="container">
                             <div class="row">
-                                <a href="">Javier Blanco</a>
+                                <a href="">{{request.user.username}}</a>
                             </div>
                             <div class="row">
                                 <small>@jbantequera</small>
@@ -42,7 +42,7 @@ Inicio
                 <a class="nav-link active" href="#"><i class="fas fa-home"></i> Inicio</a>
                 <a class="nav-link" href="#"><i class="fas fa-bell"></i> Notificaciones</a>
                 <a class="nav-link" href="#"><i class="fas fa-cog"></i> Ajustes</a>
-                <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+                <a class="nav-link" href="{% url 'home:custom-logout' %}"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
             </nav>
         </nav>
         <!-- NAVBAR MOVIL -->
@@ -52,7 +52,7 @@ Inicio
                 <a href=""><i class="fas fa-search"></i></a>
                 <a href=""><i class="fas fa-bell"></i></a>
                 <a href=""><i class="fas fa-cog"></i></a>
-                <a href=""><i class="fas fa-sign-out-alt"></i></a>
+                <a href="{% url 'home:custom-logout' %}"><i class="fas fa-sign-out-alt"></i></a>
             </nav>
         </div>
         
