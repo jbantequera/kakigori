@@ -1,0 +1,86 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block title %}
+Inicio
+{% endblock %}
+
+{% block custom-css %}
+    {{block.super}}
+	<link rel='stylesheet' type='text/css' media='screen' href="{% static 'home/feed.css' %}">
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row" style="height:100vh">
+        <!-- NAVBAR ESCRITORIO -->
+        <nav class="col-md-3 col-lg-2 md-hide shadow-lg h-100" style="padding: 0; z-index: 10; background-color: #f5f5f5">
+            <!-- PANEL -->
+            <div class="container mt-3">
+                <div class="row pl-3">
+                    <div class="col-md-4 p-0 lg-hide">
+                        <a href="" class="user-image rounded-circle  shadow"><img class="rounded-circle" src="https://www.shitpostbot.com/img/sourceimages/aniki-58a93d9c21323.jpeg"></a>
+                    </div>
+                    <div class="col-lg-8 col-md-12">
+                        <div class="container">
+                            <div class="row">
+                                <a href="">{{request.user.profile.display_name}}</a>
+                            </div>
+                            <div class="row">
+                                <small>@{{request.user.username}}</small>
+                            </div>
+                            <div class="row mt-2 lg-hide">
+                                <strong>{{request.user.profile.followers.count}} seguidores</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <!-- LINKS -->
+            <nav class="nav flex-column ml-2" style="font-size: 1.2rem;">
+                <a class="nav-link active" href="{% url 'home:show-feed' %}"><i class="fas fa-home"></i> Inicio</a>
+                <a class="nav-link" href="#"><i class="fas fa-bell"></i> Notificaciones</a>
+                <a class="nav-link" href="{% url 'home:edit-profile' %}"><i class="fas fa-cog"></i> Ajustes</a>
+                <a class="nav-link" href="{% url 'home:custom-logout' %}"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+            </nav>
+        </nav>
+        <!-- NAVBAR MOVIL -->
+        <div class="col-12 md-show p-0 fixed-bottom" style="height: 40px;">
+            <nav class="navbar navbar-light bg-light px-4 nav-movil" style="height: 100%;">
+                <a href="{% url 'home:show-feed' %}"><i class="fas fa-home"></i></a>
+                <a href=""><i class="fas fa-search"></i></a>
+                <a href=""><i class="fas fa-bell"></i></a>
+                <a href="{% url 'home:edit-profile' %}"><i class="fas fa-cog"></i></a>
+                <a href="{% url 'home:custom-logout' %}"><i class="fas fa-sign-out-alt"></i></a>
+            </nav>
+        </div>
+        
+        <!-- CONTENIDO -->
+        <div class="col-md-9 col-lg-8 col-12 p-4">
+            {% block contenido %}
+            {% endblock %}
+        </div>
+        
+        <!-- CONTROLES -->
+        <div class="col-lg-2 p-0 shadow-lg md-hide" style="z-index: 999">
+            <div class="container-fluid">
+                <div class="row mt-4 justify-content-center">
+                    <div clas="col">
+                        <form>
+                            <input type="text" class="search-input" id="searchInput" placeholder="Búsqueda" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Búsqueda'">
+                        </form>
+                    </div>
+                </div>
+                <div class="row mt-4 justify-content-center">
+                    <input class="btn btn-crear" onclick="location.href='{% url 'home:new-recipe' %}'" type="button" value="Crear Receta">
+                </div>
+            </div>
+        </div>
+        <!-- CONTROL EN MÓVIL -->
+        <div class="md-show" style="position: fixed; bottom: 7vh; z-index: 999">
+            <a href="{% url 'home:new-recipe' %}" class="shadow div-crear">Añadir receta</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -11,10 +11,15 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, verbose_name=u'Usuario asociado', on_delete=models.CASCADE)
     display_name = models.CharField(verbose_name=u'Nombre', max_length=15)
-    followers = models.ManyToManyField(User, verbose_name=u'Seguidores', related_name='Seguidores')
+    bio = models.TextField(verbose_name=u'Biografía', max_length=144, blank=True)
+    followers = models.ManyToManyField('self', verbose_name=u'Seguidores', related_name='Seguidores')
+    followed = models.ManyToManyField('self', verbose_name=u'Seguidos', related_name='Seguidos')
+
+    def __str__(self):
+        return('Perfil de ' + self.user.username)
 
 # RECETAS
-class Recipee(models.Model):
+class Recipe(models.Model):
     class Meta:
         verbose_name = u'Receta'
         verbose_name_plural = u'Recetas'
@@ -27,3 +32,6 @@ class Recipee(models.Model):
 
     instructions = models.TextField(verbose_name=u'Instrucciones')
     score = models.IntegerField(verbose_name=u'Puntuación', default=0)
+
+    def __str__(self):
+        return(self.name + ' (' + self.author.user.username + ')')

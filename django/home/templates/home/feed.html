@@ -1,4 +1,4 @@
-{% extends "base/base.html" %}
+{% extends "base/dashboard.html" %}
 {% load static %}
 
 {% block title %}
@@ -7,115 +7,51 @@ Inicio
 
 {% block custom-css %}
     {{block.super}}
-	<link rel='stylesheet' type='text/css' media='screen' href="{% static 'home/feed.css' %}">
+    <!-- TODO: SEPARAR FEED DE DASHBOARD EN CSS -->
 {% endblock %}
 
-{% block body %}
-<div class="container-fluid">
-    <div class="row" style="height:100vh">
-        <!-- NAVBAR ESCRITORIO -->
-        <nav class="col-md-3 col-lg-2 md-hide shadow-lg h-100" style="padding: 0; z-index: 10; background-color: #f5f5f5">
-            <!-- PANEL -->
-            <div class="container mt-3">
-                <div class="row pl-3">
-                    <div class="col-md-4 p-0 lg-hide">
-                        <a href="" class="user-image rounded-circle  shadow"><img class="rounded-circle" src="https://www.shitpostbot.com/img/sourceimages/aniki-58a93d9c21323.jpeg"></a>
-                    </div>
-                    <div class="col-lg-8 col-md-12">
-                        <div class="container">
-                            <div class="row">
-                                <a href="">{{request.user.username}}</a>
-                            </div>
-                            <div class="row">
-                                <small>@jbantequera</small>
-                            </div>
-                            <div class="row mt-2 lg-hide">
-                                <strong>58 seguidores</strong>
-                            </div>
+{% block contenido %}
+<div class="container-fluid contenido" style="min-height: 100%">
+    <!-- RECETA -->
+    {% for recipe in recipes %}
+    <div class="container-fluid receta-min shadow my-3 ">
+        <!-- COMPROBAR SI ES RECETA O RESEÑA -->
+        <div class="row receta">
+            <div class="col-md-3 p-0" style="min-height: 100px;">
+                <div class="receta-img" style="background-color: tomato;">
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="container pb-2 pt-1">
+                    <div class="row align-items-center ">
+                        <div class="col-8 p-0">
+                            <strong style="font-size: 1.3rem">{{recipe.name}}</strong>
                         </div>
+                        <div class="col-4 text-right">
+                            <i class="far fa-clock"></i> 2h
+                        </div>
+                    </div>
+                    <div class="row mt-1" style="min-height: 120px;"><p style="font-size: 0.9rem">
+                        {% if recipe.description %}
+                            {{recipe.description}}
+                        {% else %}
+                            {{recipe.instructions}}
+                        {% endif %}
+                    </p></div>
+                    <div class="row">
+                        <small>{{recipe.author.display_name}}</small>
+                    </div>
+                    <div class="row">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <i class="far fa-star"></i>
                     </div>
                 </div>
             </div>
-            <hr>
-            <!-- LINKS -->
-            <nav class="nav flex-column ml-2" style="font-size: 1.2rem;">
-                <a class="nav-link active" href="#"><i class="fas fa-home"></i> Inicio</a>
-                <a class="nav-link" href="#"><i class="fas fa-bell"></i> Notificaciones</a>
-                <a class="nav-link" href="#"><i class="fas fa-cog"></i> Ajustes</a>
-                <a class="nav-link" href="{% url 'home:custom-logout' %}"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
-            </nav>
-        </nav>
-        <!-- NAVBAR MOVIL -->
-        <div class="col-12 md-show p-0 fixed-bottom" style="height: 40px;">
-            <nav class="navbar navbar-light bg-light px-4 nav-movil" style="height: 100%;">
-                <a href=""><i class="fas fa-home"></i></a>
-                <a href=""><i class="fas fa-search"></i></a>
-                <a href=""><i class="fas fa-bell"></i></a>
-                <a href=""><i class="fas fa-cog"></i></a>
-                <a href="{% url 'home:custom-logout' %}"><i class="fas fa-sign-out-alt"></i></a>
-            </nav>
-        </div>
-        
-        <!-- CONTENIDO -->
-        <div class="col-md-9 col-lg-8 col-12 p-0">
-            <div class="container-fluid contenido" style="min-height: 100%">
-                <!-- RECETA -->
-                <div class="container-fluid receta-min shadow my-3 ">
-                    <!-- COMPROBAR SI ES RECETA O RESEÑA -->
-                    <div class="row receta">
-                        <div class="col-md-3 p-0" style="min-height: 100px;">
-                            <div class="receta-img" style="background-image: url('img/comida.jpg')">
-                            </div>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="container pb-2 pt-1">
-                                <div class="row align-items-center ">
-                                    <div class="col-8 p-0">
-                                        <strong style="font-size: 1.3rem">Pizza Pepperoni</strong>
-                                    </div>
-                                    <div class="col-4 text-right">
-                                        <i class="far fa-clock"></i> 2h
-                                    </div>
-                                </div>
-                                <div class="row mt-1" style="min-height: 120px;"><p style="font-size: 0.9rem">
-                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ullam nobis numquam, nisi nulla necessitatibus neque. Quasi, sit deserunt laborum cumque incidunt quae doloremque id nostrum necessitatibus veniam quis. Natus, veritatis?
-                                </p></div>
-                                <div class="row">
-                                    <small>Javier Blanco</small>
-                                </div>
-                                <div class="row">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- CONTROLES -->
-        <div class="col-lg-2 p-0 shadow-lg md-hide" style="z-index: 999">
-            <div class="container-fluid">
-                <div class="row mt-4 justify-content-center">
-                    <div clas="col">
-                        <form>
-                            <input type="text" class="search-input" id="searchInput" placeholder="Búsqueda" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Búsqueda'">
-                        </form>
-                    </div>
-                </div>
-                <div class="row mt-4 justify-content-center">
-                    <input class="btn btn-crear" style="" type="button" value="Crear Receta">
-                </div>
-            </div>
-        </div>
-        <!-- CONTROL EN MÓVIL -->
-        <div class="md-show" style="position: fixed; bottom: 7vh; z-index: 999">
-            <a href="" class="shadow div-crear">Añadir receta</a>
         </div>
     </div>
+    {% endfor %}
 </div>
 {% endblock %}

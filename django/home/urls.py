@@ -1,11 +1,13 @@
-from django.conf.urls import url
+from django.urls import path
 
 from . import views
 
 app_name = 'home'
 
 urlpatterns = [
-    url(r'^$', views.show_feed, name='show-feed'),
-    url(r'^custom-login/$', views.custom_login, name='custom-login'),
-    url(r'^custom-logout/$', views.custom_logout, name='custom-logout'),
+    path('', views.show_feed, name='show-feed'),
+    path('custom-login/', views.custom_login, name='custom-login'),
+    path('custom-logout/', views.custom_logout, name='custom-logout'),
+    path('edit-profile/', views.edit_profile, name='edit-profile'),
+    path('new-recipe/', views.new_recipe, name='new-recipe')
 ]
