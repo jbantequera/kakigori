@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
+# PERFIL 'PÚBLICO' DE CADA CUENTA (Nombre, Bio, Seguidores...)
 class Profile(models.Model):
     class Meta:
         verbose_name = u'Perfil de Usuario'
@@ -28,7 +28,8 @@ class Recipe(models.Model):
     
     name = models.CharField(verbose_name=u'Nombre', max_length=20)
     description = models.TextField(verbose_name=u'Descripción', max_length=144, blank=True)
-    #category
+    # CATEGORÍA DE LA RECETA
+    # TIEMPO QUE SE TARDA EN COCINAR
 
     instructions = models.TextField(verbose_name=u'Instrucciones')
     score = models.IntegerField(verbose_name=u'Puntuación', default=0)
