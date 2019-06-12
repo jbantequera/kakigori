@@ -7,19 +7,17 @@ Inicio
 
 {% block custom-css %}
     {{block.super}}
-    <!-- TODO: SEPARAR FEED DE DASHBOARD EN CSS -->
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'home/feed.css' %}">
 {% endblock %}
 
 {% block contenido %}
-<div class="container-fluid contenido" style="min-height: 100%">
     <!-- RECETA -->
     {% for recipe in recipes %}
     <div class="container-fluid receta-min shadow my-3 ">
         <!-- COMPROBAR SI ES RECETA O RESEÑA -->
         <div class="row receta">
-            <div class="col-md-3 p-0" style="min-height: 100px;">
-                <div class="receta-img" style="background-color: tomato;">
-                </div>
+            <div class="col-md-3 p-0 w-100 receta-img" style="height: inherit; background-image: url('{{recipe.image.url}}')">
+                <!--<div class="receta-img w-100 h-100" style="background-image: url('{{recipe.image.url}}')"></div>-->
             </div>
             <div class="col-md-9">
                 <div class="container pb-2 pt-1">
@@ -53,5 +51,4 @@ Inicio
         </div>
     </div>
     {% endfor %}
-</div>
 {% endblock %}

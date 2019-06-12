@@ -19,7 +19,13 @@ Inicio
             <div class="container mt-3">
                 <div class="row pl-3">
                     <div class="col-md-4 p-0 lg-hide">
-                        <a href="" class="user-image rounded-circle  shadow"><img class="rounded-circle" src="https://www.shitpostbot.com/img/sourceimages/aniki-58a93d9c21323.jpeg"></a>
+                        <a href="" class="user-image rounded-circle shadow">
+                            {% if request.user.profile.image %}
+                            <img class="rounded-circle" src="{{ request.user.profile.image.url }}">
+                            {% else %}
+                            <img class="rounded-circle" src="https://image.flaticon.com/icons/png/512/97/97895.png">
+                            {% endif %}
+                        </a>
                     </div>
                     <div class="col-lg-8 col-md-12">
                         <div class="container">
@@ -57,13 +63,13 @@ Inicio
         </div>
         
         <!-- CONTENIDO -->
-        <div class="col-md-9 col-lg-8 col-12 p-4">
+        <div class="col-md-9 col-lg-8 col-12 p-4 contenido">
             {% block contenido %}
             {% endblock %}
         </div>
         
         <!-- CONTROLES -->
-        <div class="col-lg-2 p-0 shadow-lg md-hide" style="z-index: 999">
+        <div class="col-lg-2 p-0 shadow-lg md-hide h-100" style="z-index: 999">
             <div class="container-fluid">
                 <div class="row mt-4 justify-content-center">
                     <div clas="col">

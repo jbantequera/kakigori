@@ -45,7 +45,7 @@ def edit_profile(request):
     form = ProfileForm(instance = profile)
 
     if request.method == 'POST':
-        form = ProfileForm(request.POST, instance=profile)
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
 
         if form.is_valid():
             profile = form.save()
@@ -61,7 +61,7 @@ def new_recipe(request):
     form = RecipeForm()
 
     if request.method == 'POST':
-        form = RecipeForm(request.POST)
+        form = RecipeForm(request.POST, request.FILES)
 
         if form.is_valid():
             recipe = form.save(commit=False)
@@ -73,4 +73,4 @@ def new_recipe(request):
         'form': form,
     }
 
-    return render(request, 'home/edit-profile.html', replacements)
+    return render(request, 'recipes/new_recipe.html', replacements)

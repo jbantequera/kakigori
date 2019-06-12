@@ -14,6 +14,7 @@ class Profile(models.Model):
     bio = models.TextField(verbose_name=u'Biografía', max_length=144, blank=True)
     followers = models.ManyToManyField('self', verbose_name=u'Seguidores', related_name='Seguidores')
     followed = models.ManyToManyField('self', verbose_name=u'Seguidos', related_name='Seguidos')
+    image = models.ImageField(upload_to='media_files/profile_image', default='media_files/profile_image/no-image.png')
 
     def __str__(self):
         return('Perfil de ' + self.user.username)
@@ -26,6 +27,7 @@ class Recipe(models.Model):
 
     author = models.ForeignKey(Profile, verbose_name=u'Autor', on_delete=models.CASCADE)
     
+    image = models.ImageField(upload_to='media_files/recipe_images', default='media_files/recipe_images/no-image.png')
     name = models.CharField(verbose_name=u'Nombre', max_length=20)
     description = models.TextField(verbose_name=u'Descripción', max_length=144, blank=True)
     # CATEGORÍA DE LA RECETA
