@@ -5,6 +5,36 @@
 Inicio
 {% endblock %}
 
+{% block custom-js %}
+    {{block.super}}
+    <script>
+        $(document).on("keypress", "#search-username", function(e){
+            if(e.which == 13){
+                buscarUsuario();
+            }
+        });
+
+        function buscarUsuario(){
+            var username_box = document.getElementById("search-username");
+            var username = username_box.value;
+
+            $.ajax({
+                url: "/users/check/" + username,
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    if (data.success) {
+                        window.location.href = "/" + username;
+                    } else {
+                        document.getElementById("search-error").removeAttribute('hidden');
+                        //alert(document.getElementById("search-error").textContent);
+                    }
+                }
+            });
+        }
+    </script>
+{% endblock %}
+
 {% block custom-css %}
     {{block.super}}
 	<link rel='stylesheet' type='text/css' media='screen' href="{% static 'home/feed.css' %}">
@@ -19,18 +49,18 @@ Inicio
             <div class="container mt-3">
                 <div class="row pl-3">
                     <div class="col-md-4 p-0 lg-hide">
-                        <a href="" class="user-image rounded-circle shadow">
+                        <a href="{% url 'home:view-profile' username=request.user.username %}" class="user-image rounded-circle shadow">
                             {% if request.user.profile.image %}
-                            <img class="rounded-circle" src="{{ request.user.profile.image.url }}">
+                            <img class="rounded-circle img-perfil-dashboard" src="{{ request.user.profile.image.url }}">
                             {% else %}
-                            <img class="rounded-circle" src="https://image.flaticon.com/icons/png/512/97/97895.png">
+                            <img class="rounded-circle img-perfil-dashboard" src="https://image.flaticon.com/icons/png/512/97/97895.png">
                             {% endif %}
                         </a>
                     </div>
                     <div class="col-lg-8 col-md-12">
                         <div class="container">
                             <div class="row">
-                                <a href="">{{request.user.profile.display_name}}</a>
+                                <a href="{% url 'home:view-profile' username=request.user.username %}">{{request.user.profile.display_name}}</a>
                             </div>
                             <div class="row">
                                 <small>@{{request.user.username}}</small>
@@ -46,10 +76,33 @@ Inicio
             <!-- LINKS -->
             <nav class="nav flex-column ml-2" style="font-size: 1.2rem;">
                 <a class="nav-link active" href="{% url 'home:show-feed' %}"><i class="fas fa-home"></i> Inicio</a>
-                <a class="nav-link" href="#"><i class="fas fa-bell"></i> Notificaciones</a>
+                <a class="nav-link" href="#"><i class="fas fa-bell"></i> Desarrollar</a>
                 <a class="nav-link" href="{% url 'home:edit-profile' %}"><i class="fas fa-cog"></i> Ajustes</a>
-                <a class="nav-link" href="{% url 'home:custom-logout' %}"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+                <a class="nav-link" href="{% url 'home:custom-logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </nav>
+            <hr>
+            <!-- CONTROLES -->
+            <div class="d-flex px-2 justify-content-center mt-4 w-100">
+                <div clas="col-12">
+                    <div class="container">
+                        <div class="row">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">@</span>
+                                </div>
+                                <input type="text" class="form-control" id="search-username" placeholder="Nombre de usuario">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="alert alert-danger mt-2 mx-0 py-1" id="search-error" hidden>No se ha encontrado el usuario</div>
+                        </div>
+                    </div>
+                    <button onclick="buscarUsuario()" type="button" class="w-100 btn btn-light mt-3">IR A PERFIL</button>
+                </div>
+            </div>
+            <div class="row mt-4 justify-content-center">
+                <a class="btn btn-crear" href="{% url 'home:new-recipe' %}">Crear Receta</a>
+            </div>
         </nav>
         <!-- NAVBAR MOVIL -->
         <div class="col-12 md-show p-0 fixed-bottom" style="height: 40px;">
@@ -63,26 +116,37 @@ Inicio
         </div>
         
         <!-- CONTENIDO -->
-        <div class="col-md-9 col-lg-8 col-12 p-4 contenido">
+        <div class="col-md-9 col-lg-10 col-12 p-4 contenido">
             {% block contenido %}
             {% endblock %}
         </div>
         
         <!-- CONTROLES -->
-        <div class="col-lg-2 p-0 shadow-lg md-hide h-100" style="z-index: 999">
+        {% comment %}<!--<div class="col-lg-2 p-0 shadow-lg md-hide h-100" style="z-index: 999">
             <div class="container-fluid">
                 <div class="row mt-4 justify-content-center">
-                    <div clas="col">
-                        <form>
-                            <input type="text" class="search-input" id="searchInput" placeholder="Búsqueda" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Búsqueda'">
-                        </form>
+                    <div clas="col-12">
+                        <div class="container">
+                            <div class="row">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">@</span>
+                                    </div>
+                                    <input type="text" class="form-control" id="search-username" placeholder="Nombre de usuario">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="alert alert-danger mt-2 mx-0 py-1" id="search-error" hidden>No se ha encontrado el usuario</div>
+                            </div>
+                        </div>
+                        <button onclick="buscarUsuario()" type="button" class="w-100 btn btn-light mt-3">IR A PERFIL</button>
                     </div>
                 </div>
                 <div class="row mt-4 justify-content-center">
-                    <input class="btn btn-crear" onclick="location.href='{% url 'home:new-recipe' %}'" type="button" value="Crear Receta">
+                    <a class="btn btn-crear" href="{% url 'home:new-recipe' %}">Crear Receta</a>
                 </div>
             </div>
-        </div>
+        </div>--> {% endcomment %}
         <!-- CONTROL EN MÓVIL -->
         <div class="md-show" style="position: fixed; bottom: 7vh; z-index: 999">
             <a href="{% url 'home:new-recipe' %}" class="shadow div-crear">Añadir receta</a>

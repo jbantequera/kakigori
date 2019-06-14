@@ -43,7 +43,7 @@ body {
     font-family: 'Roboto', sans-serif !important;
 }
 
-img {
+.img-perfil-dashboard {
     max-width: 80px;
     max-height: 80px;
     min-width: 80px;

@@ -11,9 +11,9 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, verbose_name=u'Usuario asociado', on_delete=models.CASCADE)
     display_name = models.CharField(verbose_name=u'Nombre', max_length=15)
-    bio = models.TextField(verbose_name=u'Biografía', max_length=144, blank=True)
-    followers = models.ManyToManyField('self', verbose_name=u'Seguidores', related_name='Seguidores')
-    followed = models.ManyToManyField('self', verbose_name=u'Seguidos', related_name='Seguidos')
+    bio = models.TextField(verbose_name=u'Biografía', max_length=256, blank=True)
+    followers = models.ManyToManyField('self', verbose_name=u'Seguidores', related_name='Seguidores', blank=True, symmetrical=False)
+    followed = models.ManyToManyField('self', verbose_name=u'Seguidos', related_name='Seguidos', blank=True, symmetrical=False)
     image = models.ImageField(upload_to='media_files/profile_image', default='media_files/profile_image/no-image.png')
 
     def __str__(self):
@@ -31,7 +31,7 @@ class Recipe(models.Model):
     name = models.CharField(verbose_name=u'Nombre', max_length=20)
     description = models.TextField(verbose_name=u'Descripción', max_length=144, blank=True)
     # CATEGORÍA DE LA RECETA
-    # TIEMPO QUE SE TARDA EN COCINAR
+    cooking_time = models.PositiveIntegerField(verbose_name=u'Tiempo de elaboración (minutos)')
 
     instructions = models.TextField(verbose_name=u'Instrucciones')
     score = models.IntegerField(verbose_name=u'Puntuación', default=0)
