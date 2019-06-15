@@ -6,24 +6,36 @@
 Nueva Receta
 {% endblock %}
 
+{% block custom-head %}
+{% endblock %}
+
 {% block contenido %}
 <h1 class="text-center">Crear nueva receta</h1>
 <form class="w-75 mx-auto" method='POST' enctype="multipart/form-data">
     {% csrf_token %}
     <div class="form-group">
-        <label for="exampleFormControlInput1">Nombre</label>
+        <label for="">Nombre</label>
+        {{ form.name.errors }}
         {{ form.name|add_class:'form-control' }}
     </div>
     <div class="form-group">
-        <label for="exampleFormControlTextarea1">Descripción</label>
+        <label for="">Tiempo de preparación (Minutos)</label>
+        {{ form.cooking_time.errors }}
+        {{ form.cooking_time|add_class:'form-control' }}
+    </div>
+    <div class="form-group">
+        <label for="">Descripción</label>
+        {{ form.description.errors }}
         {{ form.description|add_class:'form-control' }}
     </div>
     <div class="form-group">
-        <label for="exampleFormControlTextarea1">Instrucciones</label>
+        <label for="">Instrucciones</label>
+        {{ form.instructions.errors }}
         {{ form.instructions|add_class:'form-control'}}
     </div>
     <div class="form-group">
         <label><strong>Imagen de la Receta</strong></label> <br>
+        <div class="rounded" style="background-color: tomato;">{{ form.image.errors }}</div>
         {{ form.image|add_class:'form-control-file'}}
     </div>
     <button type="submit" class="btn btn-primary">Enviar</button>

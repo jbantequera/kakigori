@@ -136,6 +136,50 @@ def new_recipe(request):
 
     return render(request, 'recipes/new_recipe.html', replacements)
 
+def view_recipe(request, username, recipe_id):
+    user = User.objects.get(username=username)
+    recipe = user.profile.recipe_set.get(pk=recipe_id)
+    total_votes = recipe.votes_up + recipe.votes_down
+
+    if (recipe.author == request.user.profile):
+        is_own = True
+    else:
+        is_own = False
+    
+    if recipe.voters.filter(user = request.user).exists():
+        has_voted = True
+    else:
+        has_voted = False
+
+    replacements = {
+        'profile': user.profile,
+        'recipe': recipe,
+        'has_voted': has_voted,
+        'is_own': is_own,
+        'total_votes': total_votes,
+    }
+
+    return render(request, 'recipes/view_recipe.html', replacements)
+
+def vote_recipe(request):
+    recipe_id = request.POST.get('recipe_id')
+    recipe = Recipe.objects.get(pk=recipe_id)
+    
+    if not recipe.voters.filter(user = request.user).exists():
+        recipe_id = request.POST.get('recipe_id')
+        vote_up = request.POST.get('vote_up')
+
+        if vote_up == 'true':
+            recipe.votes_up = recipe.votes_up + 1
+        else:
+            recipe.votes_down = recipe.votes_down + 1
+
+        recipe.voters.add(request.user.profile)
+        recipe.save()
+        return JsonResponse({'success': True})
+    else:
+        return JsonResponse({'success': False})
+
 def delete_recipe(request):
     try:
         recipe_id = request.POST.get('recipe_id')
