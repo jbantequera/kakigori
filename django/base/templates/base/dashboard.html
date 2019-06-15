@@ -24,25 +24,34 @@ Inicio
             var username_box = document.getElementById("search-username");
             var username = username_box.value;
 
-            $.ajax({
-                url: "/users/check/" + username,
-                type: "GET",
-                dataType: "json",
-                success: function(data) {
-                    if (data.success) {
-                        window.location.href = "/" + username;
-                    } else {
-                        document.getElementById("search-error").removeAttribute('hidden');
-                        //alert(document.getElementById("search-error").textContent);
+            if (username != '' ){
+                $.ajax({
+                    url: "/users/check/" + username,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.success) {
+                            window.location.href = "/" + username;
+                        } else {
+                            document.getElementById("search-error-nofound").removeAttribute('hidden');
+                            //alert(document.getElementById("search-error").textContent);
+                        }
                     }
-                }
-            });
+                });
+            } else {
+                alert("No puedes dejar el campo vacío");
+            }
         }
 
         function buscarPerfilUsuario(){
             var displayname_box = document.getElementById("search-display-name");
             var displayname = displayname_box.value;
-            window.location.href = "/search/" + displayname;
+
+            if (displayname != ''){
+                window.location.href = "/search/" + displayname;
+            } else {
+                alert("No puedes dejar el campo vacío");
+            }
         }
     </script>
 {% endblock %}
@@ -107,7 +116,7 @@ Inicio
                             </div>
                         </div>
                     </div>
-                    <button onclick="buscarPerfil()" type="button" class="w-100 btn btn-light mt-3 shadow-sm">BUSCAR PERFILES</button>
+                    <button onclick="buscarPerfilUsuario()" type="button" class="w-100 btn btn-light mt-3 shadow-sm">BUSCAR PERFILES</button>
                     <hr>
                     <!-- IR A PERFIL -->
                     <div class="mt-4 container">
@@ -120,7 +129,7 @@ Inicio
                             </div>
                         </div>
                         <div class="row">
-                            <div class="alert alert-danger w-100 mt-2 mx-0 px-0 text-center py-1" id="search-error" hidden>No se ha encontrado el usuario</div>
+                            <div class="alert alert-danger w-100 mt-2 mx-0 px-0 text-center py-1" id="search-error-nofound" hidden>No se ha encontrado el usuario</div>
                         </div>
                     </div>
                     <button onclick="irPerfilUsuario()" type="button" class="w-100 btn btn-light mt-3 shadow-sm">IR A PERFIL</button>

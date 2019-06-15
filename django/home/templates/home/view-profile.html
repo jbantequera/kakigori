@@ -7,38 +7,6 @@
 
 {% block custom-js %}
     {{block.super}}
-
-    <script>
-    function seguirUsuario(username){
-        $.ajax({
-            url: "/users/follow",
-            data: {
-                'csrfmiddlewaretoken': "{{ csrf_token }}",
-                'username': username,
-            },
-            type: "POST",
-            dataType: "json",
-            success: function(data) {
-                window.location.reload();
-            }
-        });
-    }
-
-    function dejarDeSeguirUsuario(username){
-        $.ajax({
-            url: "/users/unfollow",
-            data: {
-                'csrfmiddlewaretoken': "{{ csrf_token }}",
-                'username': username,
-            },
-            type: "POST",
-            dataType: "json",
-            success: function(data) {
-                window.location.reload()
-            }
-        });
-    }
-    </script>
 {% endblock %}
 
 {% block contenido %}
