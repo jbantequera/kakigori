@@ -1,0 +1,70 @@
+{% extends "base/dashboard.html" %}
+{% load static %}
+
+{% block title %}
+{{profile.display_name}}
+{% endblock %}
+
+{% block custom-js %}
+    {{block.super}}
+{% endblock %}
+
+{% block contenido %}
+<div class="row mx-0 justify-content-center">
+<div class="container mx-4 mt-2 p-3 shadow-lg" style="border-radius: 15px;">
+    <div class="row justify-content-center">
+        <a href="" class="user-image rounded-circle shadow" style="width: 150px; height: 150px;">
+            <img class="rounded-circle" width="150px" height="150px" src="{{ profile.image.url }}">
+        </a>
+    </div>
+    <div class="row justify-content-center">
+        <h1 class="mb-0">{{profile.display_name}}</h1>
+    </div>
+    <div class="row justify-content-center">
+        <small>@{{profile.user.username}}</small>
+    </div>
+    {% if profile != request.user.profile %}
+        <div class="row justify-content-center mt-1">
+            <span class="px-1" style="background-color: #212121; border-radius: 5px; color: white; opacity: 0.8;">
+            {% if is_following %}
+                TE SIGUE
+            {% else %}
+                NO TE SIGUE
+            {% endif %}
+            </span>
+        </div>
+    {% endif %}
+    <div class="row mt-2 justify-content-center">
+        <div class="col-6 text-right">
+            <a class="text-reset" href="{% url 'home:view_followed' username=profile.user.username %}">{{profile.followed.count}} Seguidos</a>
+        </div>
+        <div class="col-6 text-left">
+            <a class="text-reset" href="{% url 'home:view_followers' username=profile.user.username %}">{{profile.followers.count}} Seguidores</a>
+        </div>
+    </div>
+    <hr class="w-75">
+    <div class="row justify-content-center mt-3">
+        <p class="w-75 text-center">{{profile.bio}}</p>
+    </div>
+    {% if profile != request.user.profile %}
+    <div class="row justify-content-center">
+        {% if is_followed %}
+            <button type="button" onClick="dejarDeSeguirUsuario('{{profile.user.username}}')" class="btn btn-danger">DEJAR DE SEGUIR</button>
+        {% else %}
+            <button type="button" onClick="seguirUsuario('{{profile.user.username}}')" class="btn btn-primary">SEGUIR</button>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+</div>
+
+<div class="row mx-0 justify-content-center">
+<div class="container mt-5 mx-2">
+    <div class="row justify-content-center">
+        <h2>Recetas de {{profile.display_name}} ({{profile.recipe_set.count}})</h2>
+    </div>
+    {% include 'recipes/recipe-list.html' %}
+</div>
+</div>
+
+{% endblock %}

@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'home',
     'base',
+    'kakigori_users',
+    'recipes',
 ]
 
 MIDDLEWARE = [
