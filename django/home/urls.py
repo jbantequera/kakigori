@@ -18,9 +18,10 @@ urlpatterns = [
     path('recipes/new', views.new_recipe, name='new-recipe'),
     path('recipes/vote', views.vote_recipe, name='vote-recipe'),
     path('recipes/delete', views.delete_recipe, name='delete-recipe'),
+    path('recipes/search/<str:recipe>', views.search_recipe, name='search-recipe'),
     
     #PERFILES
-    path('search/<str:profile_name>', views.profile_search, name='profile_search'),
+    path('users/search/<str:profile_name>', views.profile_search, name='profile_search'),
     path('<str:username>/followers', views.view_profile_followers, name='view_followers'),
     path('<str:username>/followed', views.view_profile_followed, name='view_followed'),
     path('<str:username>', views.view_profile, name='view-profile'),

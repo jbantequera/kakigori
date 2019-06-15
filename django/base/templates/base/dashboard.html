@@ -20,6 +20,12 @@ Inicio
             }
         });
 
+        $(document).on("keypress", "#search-receta", function(e){
+            if(e.which == 13){
+                buscarReceta();
+            }
+        });
+
         function irPerfilUsuario(){
             var username_box = document.getElementById("search-username");
             var username = username_box.value;
@@ -48,7 +54,18 @@ Inicio
             var displayname = displayname_box.value;
 
             if (displayname != ''){
-                window.location.href = "/search/" + displayname;
+                window.location.href = "/users/search/" + displayname;
+            } else {
+                alert("No puedes dejar el campo vacío");
+            }
+        }
+
+        function buscarReceta(){
+            var receta_box = document.getElementById("search-receta");
+            var receta = receta_box.value;
+
+            if (receta != ''){
+                window.location.href = "/recipes/search/" + receta;
             } else {
                 alert("No puedes dejar el campo vacío");
             }
@@ -88,7 +105,7 @@ Inicio
                             </div>
                             <div class="row mt-2 lg-hide d-flex flex-column" style="font-size: 0.8rem;">
                                 <a class="text-reset" href="{% url 'home:view_followers' username=request.user.username %}"><strong>{{request.user.profile.followers.count}} seguidores</strong></a>
-                                <a class="text-reset" href="{% url 'home:view_followed' username=request.user.username %}"><strong>{{request.user.profile.followers.count}} seguidos</strong></a>
+                                <a class="text-reset" href="{% url 'home:view_followed' username=request.user.username %}"><strong>{{request.user.profile.followed.count}} seguidos</strong></a>
                             </div>
                         </div>
                     </div>
@@ -107,6 +124,16 @@ Inicio
             <div class="d-flex px-2 justify-content-center mt-4 w-100">
                 <div clas="col-12">
                     <a class="btn btn-light w-100 shadow-sm" href="{% url 'home:new-recipe' %}">Crear Receta</a>
+                    <hr>
+                    <!-- BUSCAR RECETA -->
+                    <div class="mt-4 container">
+                        <div class="row">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="search-receta" placeholder="Receta">
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="buscarReceta()" type="button" class="w-100 btn btn-light mt-3 shadow-sm">BUSCAR RECETAS</button>
                     <hr>
                     <!-- BUSCAR USUARIO -->
                     <div class="mt-4 container">

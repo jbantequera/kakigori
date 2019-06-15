@@ -15,6 +15,35 @@ Inicio
 {% endblock %}
 
 {% block contenido %}
-    <h1 class="text-center">RECETAS RECIENTES</h1>
+    <h1 class="text-center">{{page_name}}</h1>
     {% include 'components/recipe-list.html' %}
+    
+    <!-- PAGINATION -->
+    <div class="pagination d-flex align-items-center justify-content-center my-4" style="font-size:1.5rem;">
+        {% if recipes.has_previous %}
+            <a href="?page=1" class="mr-2">
+                <i class="fas fa-angle-double-left"></i>
+            </a>
+            <a href="?page={{recipes.previous_page_number}}" class="mr-2">
+                <i class="fas fa-angle-left"></i>
+            </a>
+        {% endif %}
+        
+        {% for num in recipes.paginator.page_range %}
+            {% if recipes.number == num %}
+                <strong class="mx-1">{{num}}</strong>
+            {% elif num > recipes.number|add:'-3' and num < recipes.number|add:'3' %}
+                <a class="mx-1" href="?page={{num}}">{{num}}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if recipes.has_next %}
+            <a class="ml-2" href="?page={{recipes.next_page_number}}">
+                <i class="fas fa-angle-right"></i>
+            </a>
+            <a class="ml-2" href="?page={{recipes.paginator.num_pages}}">
+                <i class="fas fa-angle-double-right"></i>
+            </a>
+        {% endif %}
+    </div>
 {% endblock %}
