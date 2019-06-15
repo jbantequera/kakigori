@@ -24,14 +24,14 @@ class Recipe(models.Model):
     class Meta:
         verbose_name = u'Receta'
         verbose_name_plural = u'Recetas'
-        ordering = ['-created_at']
+        ordering = ['created_at']
 
     author = models.ForeignKey(Profile, verbose_name=u'Autor', on_delete=models.CASCADE)
     created_at = models.DateTimeField(verbose_name=u'Fecha de creación', auto_now_add=True)
 
     image = models.ImageField(upload_to='media_files/recipe_images', default='media_files/recipe_images/no-image.png')
     name = models.CharField(verbose_name=u'Nombre', max_length=20)
-    description = models.TextField(verbose_name=u'Descripción', max_length=256)
+    description = models.TextField(verbose_name=u'Descripción', max_length=512)
     # CATEGORÍA DE LA RECETA
     cooking_time = models.PositiveIntegerField(verbose_name=u'Tiempo de elaboración (minutos)')
     # RATING

@@ -19,7 +19,26 @@
             dataType: "json",
             success: function(data) {
                 if (data.success){
-                    alert("Se ha votado!")
+                    window.location.reload();
+                } else {
+                    alert("Ha ocurrido un error");
+                }
+            }
+        });
+    }
+
+    function deleteRecipe(recipe_id){
+        $.ajax({
+            url: "/recipes/delete",
+            data: {
+                'csrfmiddlewaretoken': "{{ csrf_token }}",
+                'recipe_id': recipe_id,
+            },
+            type: "POST",
+            dataType: "json",
+            success: function(data) {
+                if (data.success) {
+                    window.location.href = "/" + '{{request.user.username}}';
                 } else {
                     alert("Ha ocurrido un error");
                 }
@@ -80,19 +99,21 @@
     </div>
     {% if not is_own %}
     <div class="row justify-content-center">
-        <h2 class="mt-4 w-100 text-center">¡Valora esta receta!</h2>
         {% if not has_voted %}
+            <h2 class="mt-4 w-100 text-center">¡Valora esta receta!</h2>
             <div class="col-4 text-right" style="font-size: 2rem;">
-                {{recipe.votes_up}} <a onclick="sendVote('{{recipe.id}}', true)"><i class="fas fa-thumbs-up" style="color: #00c853;"></i></a>
+                {{recipe.votes_up}} <a onclick="sendVote('{{recipe.id}}', true)"><i class="fas fa-thumbs-up" style="color: #00c853; cursor: pointer;"></i></a>
             </div>
             <div class="col-4 text-left" style="font-size: 2rem;">
-                {{recipe.votes_down}} <a onclick="sendVote('{{recipe.id}}', false)"><i class="fas fa-thumbs-down" style="color: #e53935; "></i></a>
+                {{recipe.votes_down}} <a onclick="sendVote('{{recipe.id}}', false)"><i class="fas fa-thumbs-down" style="color: #e53935; cursor: pointer; "></i></a>
             </div>
         {% else %}
-            <div class="col-6 text-center" style="font-size: 1.2rem;">
-                ¡Gracias por haber votado!
-            </div>
+            <h2 class="mt-4 w-100 text-center">¡Gracias por haber votado!</h2>
         {% endif %}
+    </div>
+    {% else %}
+    <div class="row justify-content-center">
+        <button type="button" onclick="deleteRecipe('{{recipe.id}}')" class="btn btn-danger">ELIMINAR RECETA</button>
     </div>
     {% endif %}
 </div>

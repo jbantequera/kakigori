@@ -6,9 +6,10 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib.auth.models import User
 
 from itertools import chain
+from operator import attrgetter
 
 from django.contrib.auth import authenticate, login, logout
-from base.forms import ProfileForm, RecipeForm
+from base.forms import ProfileForm, RecipeForm, SignupForm
 from base.models import Profile, Recipe
 
 # Create your views here.
@@ -21,13 +22,42 @@ def custom_login(request):
     if user is not None:
         login(request, user)
         
-    return HttpResponseRedirect(reverse('home:show-feed'))
+    return HttpResponseRedirect(reverse('home:home'))
 
 def custom_logout(request):
     if request.user.is_authenticated:
         logout(request)
 
-    return HttpResponseRedirect(reverse('home:show-feed'))
+    return HttpResponseRedirect(reverse('home:home'))
+
+def custom_signup(request):
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        
+        if form.is_valid():
+            new_user = form.save()
+            display_name = form.cleaned_data.get('display_name')
+            bio = form.cleaned_data.get('bio')
+            
+            new_user.profile = Profile()
+            new_user.profile.display_name = display_name
+            new_user.profile.bio = bio
+            new_user.profile.save()
+
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            
+            login(request, user)
+            return HttpResponseRedirect(reverse("home:home"))
+    else:
+        form = SignupForm()
+    
+    replacements = {
+        'form': form
+    }
+
+    return render(request, 'home/create-account.html', replacements)
 
 def show_feed(request):
     if request.user.is_authenticated:
@@ -35,7 +65,7 @@ def show_feed(request):
         recipes_followed = Recipe.objects.filter(author__in = request.user.profile.followed.all())
         recipes_own = Recipe.objects.filter(author=request.user.profile)
 
-        recipes = list(chain(recipes_followed, recipes_own))
+        recipes = sorted(chain(recipes_followed, recipes_own), key=attrgetter('created_at'), reverse=True)
 
         replacements = {
             'recipes': recipes,
@@ -55,7 +85,7 @@ def edit_profile(request):
 
         if form.is_valid():
             profile = form.save()
-            return HttpResponseRedirect(reverse("home:show-feed"))
+            return HttpResponseRedirect(reverse("home:home"))
 
     replacements = {
         'form': form,
@@ -128,7 +158,7 @@ def new_recipe(request):
             recipe = form.save(commit=False)
             recipe.author = request.user.profile
             recipe.save()
-            return HttpResponseRedirect(reverse('home:show-feed'))
+            return HttpResponseRedirect(reverse('home:home'))
 
     replacements = {
         'form': form,

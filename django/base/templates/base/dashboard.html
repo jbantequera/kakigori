@@ -75,7 +75,7 @@ Inicio
             <hr>
             <!-- LINKS -->
             <nav class="nav flex-column ml-2" style="font-size: 1.2rem;">
-                <a class="nav-link active" href="{% url 'home:show-feed' %}"><i class="fas fa-home"></i> Inicio</a>
+                <a class="nav-link active" href="{% url 'home:home' %}"><i class="fas fa-home"></i> Inicio</a>
                 <a class="nav-link" href="#"><i class="fas fa-bell"></i> Desarrollar</a>
                 <a class="nav-link" href="{% url 'home:edit-profile' %}"><i class="fas fa-cog"></i> Ajustes</a>
                 <a class="nav-link" href="{% url 'home:custom-logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -84,7 +84,8 @@ Inicio
             <!-- CONTROLES -->
             <div class="d-flex px-2 justify-content-center mt-4 w-100">
                 <div clas="col-12">
-                    <div class="container">
+                    <a class="btn btn-light w-100 shadow-sm" href="{% url 'home:new-recipe' %}">Crear Receta</a>
+                    <div class="mt-4 container">
                         <div class="row">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -97,17 +98,14 @@ Inicio
                             <div class="alert alert-danger mt-2 mx-0 py-1" id="search-error" hidden>No se ha encontrado el usuario</div>
                         </div>
                     </div>
-                    <button onclick="buscarUsuario()" type="button" class="w-100 btn btn-light mt-3">IR A PERFIL</button>
+                    <button onclick="buscarUsuario()" type="button" class="w-100 btn btn-light mt-3 shadow-sm">IR A PERFIL</button>
                 </div>
-            </div>
-            <div class="row mt-4 justify-content-center">
-                <a class="btn btn-crear" href="{% url 'home:new-recipe' %}">Crear Receta</a>
             </div>
         </nav>
         <!-- NAVBAR MOVIL -->
         <div class="col-12 md-show p-0 fixed-bottom" style="height: 40px;">
             <nav class="navbar navbar-light bg-light px-4 nav-movil" style="height: 100%;">
-                <a href="{% url 'home:show-feed' %}"><i class="fas fa-home"></i></a>
+                <a href="{% url 'home:home' %}"><i class="fas fa-home"></i></a>
                 <a href=""><i class="fas fa-search"></i></a>
                 <a href=""><i class="fas fa-bell"></i></a>
                 <a href="{% url 'home:edit-profile' %}"><i class="fas fa-cog"></i></a>

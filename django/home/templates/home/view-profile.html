@@ -42,7 +42,8 @@
 {% endblock %}
 
 {% block contenido %}
-<div class="container mx-auto ml-2 p-3 shadow-lg" style="border-radius: 15px;">
+<div class="row justify-content-center">
+<div class="container mx-4 mt-2 p-3 shadow-lg" style="border-radius: 15px;">
     <div class="row justify-content-center">
         <a href="" class="user-image rounded-circle shadow" style="width: 150px; height: 150px;">
             <img class="rounded-circle" width="150px" height="150px" src="{{ profile.image.url }}">
@@ -66,10 +67,10 @@
         </div>
     {% endif %}
     <div class="row mt-2 justify-content-center">
-        <div class="col-2 text-right">
+        <div class="col-6 text-right">
             <span>{{profile.followed.count}} Seguidos</span>
         </div>
-        <div class="col-2 text-left">
+        <div class="col-6 text-left">
             <span>{{profile.followers.count}} Seguidores</span>
         </div>
     </div>
@@ -87,12 +88,15 @@
     </div>
     {% endif %}
 </div>
+</div>
 
-<div class="container mt-5">
+<div class="row justify-content-center">
+<div class="container mt-5 mx-2">
     <div class="row justify-content-center">
         <h2>Recetas de {{profile.display_name}} ({{profile.recipe_set.count}})</h2>
     </div>
     {% include 'components/recipe-list.html' %}
+</div>
 </div>
 
 {% endblock %}
