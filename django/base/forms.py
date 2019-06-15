@@ -12,7 +12,7 @@ class ProfileForm(ModelForm):
 class RecipeForm(ModelForm):
     class Meta:
         model = Recipe
-        fields = ['name', 'description', 'instructions', 'image', 'cooking_time']
+        fields = ['name', 'description', 'ingredients', 'instructions', 'image', 'cooking_time']
 
 class SignupForm(UserCreationForm):
     display_name = CharField(max_length=15)

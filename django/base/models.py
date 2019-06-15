@@ -39,6 +39,7 @@ class Recipe(models.Model):
     votes_down = models.PositiveIntegerField(verbose_name=u'Votos negativos', default=0)
     voters = models.ManyToManyField('Profile', verbose_name=u'Usuarios que han votado', related_name='Usuarios_que_han_votado', blank=True)
 
+    ingredients = models.TextField(verbose_name=u'Ingredientes')
     instructions = models.TextField(verbose_name=u'Instrucciones')
 
     def __str__(self):

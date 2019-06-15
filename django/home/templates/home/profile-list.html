@@ -1,0 +1,56 @@
+{% extends "base/dashboard.html" %}
+{% load static %}
+
+{% block title %}
+Inicio
+{% endblock %}
+
+{% block contenido %}
+    <h1 class="text-center">{{page_name}}</h1>
+
+    <div class="container">
+    {% if profile_list %}
+        {% for profile in profile_list %}
+            <div class="container rounded py-4 pl-4 shadow mb-4">
+                <div class="row align-items-center">
+                    <div class="col-12 col-md-1 d-flex justify-content-center">
+                        <a href="" class="user-image rounded-circle shadow" style="width: 80px; height: 80px;">
+                            <img class="rounded-circle" width="80px" height="80px" src="{{ profile.image.url }}">
+                        </a>
+                    </div>
+                    <div class="col-12 col-md-3 mb-3 d-flex justify-content-center flex-column">
+                        <a href="{% url 'home:view-profile' username=profile.user.username %}"><h2 class="mb-0 text-center">{{profile.display_name}}</h2></a>
+                        <div class="d-flex justify-content-center">
+                            <small>@{{profile.user.username}}</small>
+                            {% if profile != request.user.profile %}
+                                <span class="ml-2 px-1" style="font-size: 0.8rem; background-color: #212121; border-radius: 5px; color: white; opacity: 0.8;">
+                                {% if profile in request.user.profile.followers.all %}
+                                    TE SIGUE
+                                {% else %}
+                                    NO TE SIGUE
+                                {% endif %}
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-12 mb-3 d-flex justify-content-center">
+                        {{profile.bio}}
+                    </div>
+                    <div class="col-12 col-md-3">
+                        {% if profile != request.user.profile %}
+                            {% if profile in request.user.profile.followed.all %}
+                                <button type="button" onClick="dejarDeSeguirUsuario('{{profile.user.username}}')" class="w-100 btn btn-danger float-right">DEJAR DE SEGUIR</button>
+                            {% else %}
+                                <button type="button" onClick="seguirUsuario('{{profile.user.username}}')" class="w-100 btn btn-primary float-right">SEGUIR</button>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="row justify-content-center">
+            <div class="alert alert-danger mt-2 mx-0 py-1" id="search-error">No se han encontrado usuarios</div>
+        </div>
+    {% endif %}
+{% endblock %}

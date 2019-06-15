@@ -10,11 +10,17 @@ Inicio
     <script>
         $(document).on("keypress", "#search-username", function(e){
             if(e.which == 13){
-                buscarUsuario();
+                irPerfilUsuario();
             }
         });
 
-        function buscarUsuario(){
+        $(document).on("keypress", "#search-display-name", function(e){
+            if(e.which == 13){
+                buscarPerfilUsuario();
+            }
+        });
+
+        function irPerfilUsuario(){
             var username_box = document.getElementById("search-username");
             var username = username_box.value;
 
@@ -32,6 +38,12 @@ Inicio
                 }
             });
         }
+
+        function buscarPerfilUsuario(){
+            var displayname_box = document.getElementById("search-display-name");
+            var displayname = displayname_box.value;
+            window.location.href = "/search/" + displayname;
+        }
     </script>
 {% endblock %}
 
@@ -48,7 +60,7 @@ Inicio
             <!-- PANEL -->
             <div class="container mt-3">
                 <div class="row pl-3">
-                    <div class="col-md-4 p-0 lg-hide">
+                    <div class="col-md-4 d-flex align-items-center p-0 lg-hide">
                         <a href="{% url 'home:view-profile' username=request.user.username %}" class="user-image rounded-circle shadow">
                             {% if request.user.profile.image %}
                             <img class="rounded-circle img-perfil-dashboard" src="{{ request.user.profile.image.url }}">
@@ -62,11 +74,12 @@ Inicio
                             <div class="row">
                                 <a href="{% url 'home:view-profile' username=request.user.username %}">{{request.user.profile.display_name}}</a>
                             </div>
-                            <div class="row">
+                            <div class="row" style="margin-top: -5px;">
                                 <small>@{{request.user.username}}</small>
                             </div>
-                            <div class="row mt-2 lg-hide">
-                                <strong>{{request.user.profile.followers.count}} seguidores</strong>
+                            <div class="row mt-2 lg-hide d-flex flex-column" style="font-size: 0.8rem;">
+                                <a class="text-reset" href="{% url 'home:view_followers' username=request.user.username %}"><strong>{{request.user.profile.followers.count}} seguidores</strong></a>
+                                <a class="text-reset" href="{% url 'home:view_followed' username=request.user.username %}"><strong>{{request.user.profile.followers.count}} seguidos</strong></a>
                             </div>
                         </div>
                     </div>
@@ -85,6 +98,18 @@ Inicio
             <div class="d-flex px-2 justify-content-center mt-4 w-100">
                 <div clas="col-12">
                     <a class="btn btn-light w-100 shadow-sm" href="{% url 'home:new-recipe' %}">Crear Receta</a>
+                    <hr>
+                    <!-- BUSCAR USUARIO -->
+                    <div class="mt-4 container">
+                        <div class="row">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="search-display-name" placeholder="Perfil">
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="buscarPerfil()" type="button" class="w-100 btn btn-light mt-3 shadow-sm">BUSCAR PERFILES</button>
+                    <hr>
+                    <!-- IR A PERFIL -->
                     <div class="mt-4 container">
                         <div class="row">
                             <div class="input-group">
@@ -95,10 +120,10 @@ Inicio
                             </div>
                         </div>
                         <div class="row">
-                            <div class="alert alert-danger mt-2 mx-0 py-1" id="search-error" hidden>No se ha encontrado el usuario</div>
+                            <div class="alert alert-danger w-100 mt-2 mx-0 px-0 text-center py-1" id="search-error" hidden>No se ha encontrado el usuario</div>
                         </div>
                     </div>
-                    <button onclick="buscarUsuario()" type="button" class="w-100 btn btn-light mt-3 shadow-sm">IR A PERFIL</button>
+                    <button onclick="irPerfilUsuario()" type="button" class="w-100 btn btn-light mt-3 shadow-sm">IR A PERFIL</button>
                 </div>
             </div>
         </nav>
@@ -137,7 +162,7 @@ Inicio
                                 <div class="alert alert-danger mt-2 mx-0 py-1" id="search-error" hidden>No se ha encontrado el usuario</div>
                             </div>
                         </div>
-                        <button onclick="buscarUsuario()" type="button" class="w-100 btn btn-light mt-3">IR A PERFIL</button>
+                        <button onclick="irPerfilUsuario()" type="button" class="w-100 btn btn-light mt-3">IR A PERFIL</button>
                     </div>
                 </div>
                 <div class="row mt-4 justify-content-center">

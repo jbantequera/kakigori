@@ -5,6 +5,10 @@
 Inicio
 {% endblock %}
 
+{% block custom-meta %}
+<meta http-equiv="Refresh" content="60">
+{% endblock %}
+
 {% block custom-css %}
     {{block.super}}
     <link rel='stylesheet' type='text/css' media='screen' href="{% static 'home/feed.css' %}">

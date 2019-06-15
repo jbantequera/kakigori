@@ -219,3 +219,35 @@ def delete_recipe(request):
         return JsonResponse({'success': True})
     except:
         return JsonResponse({'success': False})
+
+def view_profile_followers(request, username):
+    profile = User.objects.get(username=username).profile
+    followers = profile.followers.all()
+
+    replacements = {
+        'page_name': 'Seguidores de ' + profile.display_name,
+        'profile_list': followers,
+    }
+
+    return render(request, 'home/profile-list.html', replacements)
+
+def view_profile_followed(request, username):
+    profile = User.objects.get(username=username).profile
+    followed = profile.followed.all()
+
+    replacements = {
+        'page_name': 'Seguidos por ' + profile.display_name,
+        'profile_list': followed,
+    }
+
+    return render(request, 'home/profile-list.html', replacements)
+
+def profile_search(request, profile_name):
+    profiles = Profile.objects.filter(display_name__icontains=profile_name)
+
+    replacements = {
+        'page_name': 'Búsqueda de Usuarios',
+        'profile_list': profiles
+    }
+
+    return render(request, 'home/profile-list.html', replacements)
